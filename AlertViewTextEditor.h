@@ -24,7 +24,11 @@ typedef void (^TextConfirmed)(NSString * text);
 
 - (void)showText:(NSString *)text title:(NSString *)title delegate:(id<AlertViewTextEditorDelegate>)delegate;
 - (void)showText:(NSString *)text withTitle:(NSString *)title completed:(TextConfirmed)block;
+
+// 推荐：信息支持最为丰富的形式
 - (void)showText:(NSString *)text title:(NSString *)title message:(NSString *)message completed:(TextConfirmed)block;
+// 支持文字占位的形式，一般用在新建时
+- (void)showWithPlaceHolder:(NSString *)text title:(NSString *)title completed:(TextConfirmed)block;
 
 @end
 

@@ -86,6 +86,22 @@
     [alertView show];
 }
 
+- (void)showWithPlaceHolder:(NSString *)text title:(NSString *)title completed:(TextConfirmed)block{
+    self.title = title;
+    self.confirmedBlock = block;
+    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:title
+                                                         message:nil
+                                                        delegate:self
+                                               cancelButtonTitle:@"取消"
+                                               otherButtonTitles:@"确定", nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    
+    UITextField * textField = [alertView textFieldAtIndex:0];
+    textField.placeholder = text;
+    
+    [alertView show];
+}
+
 #pragma mark UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
