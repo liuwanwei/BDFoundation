@@ -14,9 +14,10 @@
 
 - (NSArray *)domains;
 
-- (void)addDomain:(NSString *)domain;
+- (void)addDomain:(NSString *)domain official:(BOOL)official;
 
 - (void)setCurrentDomain:(NSString*)domain;
 - (NSString *)currentDomain;
+- (NSString *)officialDomain;
 
 @end

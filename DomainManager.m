@@ -10,10 +10,10 @@
 
 #define kDomain     @"HostnameIndex"
 
-static NSMutableArray * sDomains = nil;
-static int sDomainIndex = -1;
-
 @interface DomainManager()
+@property (nonatomic, strong) NSMutableArray * availableDomains;
+@property (nonatomic) int currentDomainIndex;
+@property (nonatomic) NSInteger officialDomainIndex;
 
 @end
 
@@ -33,10 +33,8 @@ static int sDomainIndex = -1;
 
 - (id)init{
     if (self = [super init]) {
-        if (sDomains == nil) {
-            sDomains = [[NSMutableArray alloc] init];
-        }
-        
+        self.availableDomains = [NSMutableArray array];
+        self.currentDomainIndex = -1;
         [self loadConfig];
     }
     
@@ -47,36 +45,43 @@ static int sDomainIndex = -1;
     // 从磁盘加载主机序号
     NSUserDefaults * ud = [NSUserDefaults standardUserDefaults];
     int index = [[ud objectForKey:kDomain] intValue];
-    sDomainIndex = index;
+    self.currentDomainIndex = index;
 }
 
 - (NSArray *)domains{
-    return [NSArray arrayWithArray:sDomains];
+    return [NSArray arrayWithArray:self.availableDomains];
 }
 
 // 添加一个域名
-- (void)addDomain:(NSString *)domain{
-    if ([sDomains containsObject:domain]) {
+- (void)addDomain:(NSString *)domain official:(BOOL)official{
+    if ([self.availableDomains containsObject:domain]) {
         return;
     }else{
-        [sDomains addObject:domain];
+        [self.availableDomains addObject:domain];
+        if (official) {
+            self.officialDomainIndex = [self.availableDomains indexOfObject:domain];
+        }
     }
 }
 
 // 设置当前使用域名
 - (void)setCurrentDomain:(NSString *)domain{
-    NSUInteger index = [sDomains indexOfObject:domain];
+    NSUInteger index = [self.availableDomains indexOfObject:domain];
     if (index != NSNotFound) {
-        sDomainIndex = (int)index;
+        self.currentDomainIndex = (int)index;
         
         // 保存到磁盘中
         NSUserDefaults * ud = [NSUserDefaults standardUserDefaults];
-        [ud setObject:[NSNumber numberWithInt:sDomainIndex] forKey:kDomain];
+        [ud setObject:[NSNumber numberWithInt:self.currentDomainIndex] forKey:kDomain];
     }
 }
 
 - (NSString *)currentDomain{
-    return sDomains[sDomainIndex];
+    return self.availableDomains[self.currentDomainIndex];
+}
+
+- (NSString *)officialDomain{
+    return self.availableDomains[self.officialDomainIndex];
 }
 
 @end
