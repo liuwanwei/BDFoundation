@@ -78,6 +78,15 @@ static MBProgressManager *sMBProgressManager;
     [self performSelector:@selector(removeHUD) withObject:self afterDelay:1];
 }
 
++ (void)toast:(NSString *)toast delay:(NSTimeInterval)delay inView:(UIView *)view{
+    MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = toast;
+    hud.margin = 10.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:delay];
+}
+
 - (void)showIndicator {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }

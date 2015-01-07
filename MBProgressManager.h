@@ -28,6 +28,9 @@
 
 - (void)showToast:(NSString *)msg withView:(UIView *)view;
 
+// 推荐：在一定时间内展示文字提示
++ (void)toast:(NSString *)toast delay:(NSTimeInterval)delay inView:(UIView *)view;
+
 - (void)showIndicator;
 - (void)hideIndicator;
 @end
