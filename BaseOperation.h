@@ -31,8 +31,9 @@ typedef enum {
 }State;
 
 typedef enum{
-    RequestTypeGet,
-    RequestTypePost
+    RequestTypeInvalid = -1,
+    RequestTypeGet = 0,
+    RequestTypePost = 1,
 }RequestType;
 
 @class BaseOperation;

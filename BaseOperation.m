@@ -126,7 +126,9 @@ static NSMutableArray * sOperations = nil;
         subUrl = [self performSelector:@selector(requestPath)];
     }
     
-    [request setUserInfo:[NSDictionary dictionaryWithObject:subUrl forKey:kRequestMetaData]];
+    if (subUrl.length != 0) {
+        [request setUserInfo:[NSDictionary dictionaryWithObject:subUrl forKey:kRequestMetaData]];
+    }
     
     return request;
     
@@ -138,10 +140,12 @@ static NSMutableArray * sOperations = nil;
         subUrl = [self performSelector:@selector(requestPath)];
     }
     
-    NSURL * url = [self makeGetApiUrl:subUrl withParams:params];
-    ASIHTTPRequest * request = [ASIHTTPRequest requestWithURL:url];
-    
-    [request setUserInfo:[NSDictionary dictionaryWithObject:subUrl forKey:kRequestMetaData]];
+    ASIHTTPRequest * request = nil;
+    if (subUrl.length != 0) {
+        NSURL * url = [self makeGetApiUrl:subUrl withParams:params];
+        request = [ASIHTTPRequest requestWithURL:url];
+        [request setUserInfo:[NSDictionary dictionaryWithObject:subUrl forKey:kRequestMetaData]];
+    }
     
     return request;
 }
@@ -240,20 +244,22 @@ static NSMutableArray * sOperations = nil;
 
 
 - (ASIHTTPRequest *)createRequest {
-    RequestType type;
+    RequestType type = RequestTypeInvalid;
     if ([self respondsToSelector:@selector(requestType)]) {
         type = (RequestType)[self performSelector:@selector(requestType)];
     }
     
-    NSDictionary * param = nil;
-    if ([self respondsToSelector:@selector(requestParam)]) {
-        param = [self performSelector:@selector(requestParam)];
-    }
-    
-    if (type == RequestTypeGet) {
-        return [self createGetRequestWithParam:param];
-    }else if(type == RequestTypePost){
-        return [self createPostRequestWithParam:param];
+    if (type != RequestTypeInvalid) {
+        NSDictionary * param = nil;
+        if ([self respondsToSelector:@selector(requestParam)]) {
+            param = [self performSelector:@selector(requestParam)];
+        }
+        
+        if (type == RequestTypeGet) {
+            return [self createGetRequestWithParam:param];
+        }else if(type == RequestTypePost){
+            return [self createPostRequestWithParam:param];
+        }
     }
     
     return nil;
