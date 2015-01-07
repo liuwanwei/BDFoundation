@@ -71,16 +71,20 @@ static NSMutableArray * sOperations = nil;
     return true;
 }
 
-+ (NSString *)rootUrl{
+- (NSString *)rootUrl{
     return [NSString stringWithFormat:@"%@index.php?r=", [[DomainManager defaultInstance] currentDomain]];
 }
 
-+ (NSString *)MakeUrlWithRelativePath:(NSString *)relativePath{
-    return [NSString stringWithFormat:@"%@%@", [BaseOperation rootUrl], relativePath];
+- (NSString *)MakeUrlWithRelativePath:(NSString *)relativePath{
+    return [NSString stringWithFormat:@"%@%@", [self rootUrl], relativePath];
 }
 
-+ (NSString *)makeUrlWithRelativePath:(NSString *)relativePath param:(NSString *)param{
-    return [NSString stringWithFormat:@"%@%@&req=%@",[BaseOperation rootUrl],relativePath,param];
+- (NSString *)makeUrlWithRelativePath:(NSString *)relativePath param:(NSString *)param{
+    if (param.length == 0) {
+        return [NSString stringWithFormat:@"%@%@",[self rootUrl],relativePath];
+    }else{
+        return [NSString stringWithFormat:@"%@%@&req=%@",[self rootUrl],relativePath,param];
+    }
 }
 
 #pragma mark - Create Get/Post Request
@@ -157,22 +161,25 @@ static NSMutableArray * sOperations = nil;
 
 // 根据参数和子URL生成GET请求时用到的最终API URL。
 - (NSURL *)makeGetApiUrl:(NSString *)subUrl withParams:(NSDictionary *)params{
-    NSString * paramString = [params jsonString];
+    NSString * paramString = nil;
+    if (params != nil) {
+        paramString = [params jsonString];
+        
+        // OBJ-C的urlencode。Json出现在HTTP URL中时，需要编码成URL格式。
+        paramString = (NSString *)
+        CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                  (CFStringRef)paramString,
+                                                                  NULL,
+                                                                  NULL,
+                                                                  kCFStringEncodingUTF8));
+    }
     
-    // OBJ-C的urlencode。Json出现在HTTP URL中时，需要编码成URL格式。
-    paramString = (NSString *)
-    CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                              (CFStringRef)paramString,
-                                                              NULL,
-                                                              NULL,
-                                                              kCFStringEncodingUTF8));
-    
-    NSString * apiUrl = [BaseOperation makeUrlWithRelativePath:subUrl param:paramString];
+    NSString * apiUrl = [self makeUrlWithRelativePath:subUrl param:paramString];
     return [NSURL URLWithString:apiUrl];
 }
 
 - (NSURL *)makePostApiUrl:(NSString *)subUrl {
-    return [NSURL URLWithString:[BaseOperation MakeUrlWithRelativePath:subUrl]];
+    return [NSURL URLWithString:[self MakeUrlWithRelativePath:subUrl]];
 }
 
 #pragma mark - AsiNetWorkQueue delegate
