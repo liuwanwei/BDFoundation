@@ -64,7 +64,6 @@ typedef enum{
 @property (nonatomic) NSTimeInterval requestTimeoutSeconds;
 
 @property (nonatomic, weak) id <OperationDelegate> delegate;
-//@property (nonatomic, weak) id<OperationDataSource> dataSource;
 
 @property (nonatomic) NSInteger code;
 @property (nonatomic) State state;

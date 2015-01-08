@@ -231,9 +231,10 @@ static NSMutableArray * sOperations = nil;
         self.response.head = [[BaseResponseCore alloc] init];
         self.response.head.code = -1;
         self.response.head.msg = [NSString stringWithFormat:@"请检查网络连接"];
-    }else{
-        NSLog(@"error: code=%d msg=%@", (int)self.response.head.code, self.response.head.msg);
     }
+    
+    NSLog(@"error: code=%d msg=%@", (int)self.response.head.code, self.response.head.msg);
+    
     
     self.state = StateFinished;
     
@@ -301,7 +302,7 @@ static NSMutableArray * sOperations = nil;
     return [body objectForKey:ROWS];
 }
 
-#pragma mark Operation缓存
+#pragma mark - 维护Operation Objects缓存
 - (void)addOperation:(BaseOperation *)operation{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
