@@ -10,13 +10,6 @@
 #import "JDJsonDecoder.h"
 #import "DomainManager.h"
 
-#define HEAD  @"head"
-#define CODE  @"code"
-#define MSG   @"msg"
-#define BODY  @"body"
-#define TOTAL @"total"
-#define ROWS  @"rows"
-
 #define kRequestMetaData              @"request_tag"
 // 要上传的文件数据在本地NSDictionary中的key
 #define kUploadFilename               @"upload_file_name"
@@ -52,8 +45,6 @@ static NSMutableArray * sOperations = nil;
     [_request setTimeOutSeconds:self.requestTimeoutSeconds];
     
     self.delegate = delegate;
-    self.state = StateWaiting;
-    self.code = ERROR;
     
     ASINetworkQueue * networkQueue;
     networkQueue = [[ASINetworkQueue alloc] init];
@@ -69,6 +60,11 @@ static NSMutableArray * sOperations = nil;
     [self addOperation:self];
     
     return true;
+}
+
+- (BOOL)startRequest:(id<OperationDelegate>)delegate withCompletion:(void (^)(BaseResponse * resp))completion{
+    self.completion = completion;
+    return [self startRequest:delegate];
 }
 
 - (NSString *)rootUrl{
@@ -209,11 +205,17 @@ static NSMutableArray * sOperations = nil;
                     [self requestDidFail:request];
                     
                 }else {
+                    if ([self.delegate respondsToSelector:@selector(didSucceed:)]) {
+                        [self.delegate didSucceed:self];
+                    }
+                    
                     if ([self respondsToSelector:@selector(afterSucceed)]) {
                         [self performSelector:@selector(afterSucceed)];
                     }
                     
-                    [self.delegate didSucceed:self];
+                    if (self.completion) {
+                        self.completion(self.response);
+                    }
                 }
             }else{
                 NSLog(@"反馈包原型错误");
@@ -234,9 +236,6 @@ static NSMutableArray * sOperations = nil;
     }
     
     NSLog(@"error: code=%d msg=%@", (int)self.response.head.code, self.response.head.msg);
-    
-    
-    self.state = StateFinished;
     
     [self.delegate didFail:self];
     
@@ -268,38 +267,6 @@ static NSMutableArray * sOperations = nil;
 
 - (void)dealloc {
     [_request clearDelegatesAndCancel];
-}
-
-
-- (NSDictionary *)getResultWithRequest:(ASIHTTPRequest *)request {
-    self.state = StateFinished;
-    
-    NSError * error;
-    NSDictionary * result = [NSJSONSerialization JSONObjectWithData:[request responseData] options:NSJSONReadingMutableContainers error:&error];
-    if (nil == result) {
-        return nil;
-    }
-    
-    NSDictionary * head = [result objectForKey:HEAD];
-    self.code = [[head objectForKey:CODE] integerValue];
-    
-    if (SUCCESS == self.code || ERROR_EMPTY == self.code) {
-        return result;
-    }
-    
-    return nil;
-}
-
-- (NSDictionary *)getBodyWithResult:(NSDictionary *)result {
-    return [result objectForKey:BODY];
-}
-
-- (NSInteger)getTotalWithBody:(NSDictionary *)body {
-    return [[body objectForKey:TOTAL] integerValue];
-}
-
-- (NSArray *)getRowsWithBody:(NSDictionary *)body {
-    return [body objectForKey:ROWS];
 }
 
 #pragma mark - 维护Operation Objects缓存

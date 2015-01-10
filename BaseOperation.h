@@ -25,11 +25,6 @@
 #define LIMIT                       18
 #define DefaultTimeoutSeconds       15.0
 
-typedef enum {
-    StateWaiting = 0,
-    StateFinished = 1
-}State;
-
 typedef enum{
     RequestTypeInvalid = -1,
     RequestTypeGet = 0,
@@ -38,7 +33,7 @@ typedef enum{
 
 @class BaseOperation;
 
-@protocol OperationDelegate
+@protocol OperationDelegate <NSObject>
 
 @optional
 - (void)didSucceed:(BaseOperation *)operation;
@@ -54,10 +49,11 @@ typedef enum{
 - (NSString *)requestPath;              // url路径
 - (Class)responseClass;                 // 反馈包解析类原型。
 
-@optional
+@optional   // TODO: 这个是个典型的delegate事件，不该放到datasource
 - (void)afterSucceed;                   // 派生类对返回内容做处理的时机，代替之前的didSucceed.
 
 @end
+
 
 @interface BaseOperation : NSObject
 
@@ -65,29 +61,13 @@ typedef enum{
 
 @property (nonatomic, weak) id <OperationDelegate> delegate;
 
-@property (nonatomic) NSInteger code;
-@property (nonatomic) State state;
-
-/* POST请求是否需要发送认证信息，不需要自动设置认证消息的Post Operation，请设置该属性为NO */
+// POST请求需要发送认证信息时设置为YES
 @property (nonatomic) BOOL needUserAuthInfo;
-
-/* 反馈包 */
 @property (nonatomic, strong) BaseResponse * response;
+@property (nonatomic, copy) void (^completion)(BaseResponse * resp);
 
+// 启动请求
 - (BOOL)startRequest:(id <OperationDelegate>)delegate;
-
-- (ASIHTTPRequest *)createRequest;
-- (void)requestDidFinish:(ASIHTTPRequest *)request;
-- (void)requestDidFail:(ASIHTTPRequest *)request;
-
-- (NSURL *)makeGetApiUrl:(NSString *)subUrl withParams:(NSDictionary *)params;
-- (NSURL *)makePostApiUrl:(NSString *)subUrl;
-- (NSDictionary *)getResultWithRequest:(ASIHTTPRequest *)request;
-- (NSDictionary *)getBodyWithResult:(NSDictionary *)result;
-- (NSInteger)getTotalWithBody:(NSDictionary *)body;
-- (NSArray *)getRowsWithBody:(NSDictionary *)body;
-
-- (ASIHTTPRequest *)createGetRequestWithParam:(NSDictionary *)params;
-- (ASIHTTPRequest *)createPostRequestWithParam:(NSDictionary *)params;
+- (BOOL)startRequest:(id<OperationDelegate>)delegate withCompletion:(void (^)(BaseResponse *))completion;
 
 @end
