@@ -40,6 +40,7 @@
 
 //StoryBoard
 #define STORYBOARD(name) (UIStoryboard *)[UIStoryboard storyboardWithName:name bundle:nil]
+#define STORYBOARDVC(name, identifier) [(STORYBOARD(name)) instantiateViewControllerWithIdentifier:identifier]
 
 //System
 #define PasteString(string)   [[UIPasteboard generalPasteboard] setString:string];

@@ -67,7 +67,8 @@ typedef enum{
 @property (nonatomic, copy) void (^completion)(BaseResponse * resp);
 
 // 启动请求
-- (BOOL)startRequest:(id <OperationDelegate>)delegate;
+- (BOOL)startRequest:(id<OperationDelegate>)delegate;
 - (BOOL)startRequest:(id<OperationDelegate>)delegate withCompletion:(void (^)(BaseResponse *))completion;
+//- (BOOL)startRequestWithCompletion:(void (^)(BaseOperation *))completion;
 
 @end

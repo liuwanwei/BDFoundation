@@ -67,6 +67,11 @@ static NSMutableArray * sOperations = nil;
     return [self startRequest:delegate];
 }
 
+//- (BOOL)startRequestWithCompletion:(void (^)(BaseOperation *))completion{
+//    self.completion = completion;
+//    return [self startRequest:nil];
+//}
+
 - (NSString *)rootUrl{
     return [NSString stringWithFormat:@"%@index.php?r=", [[DomainManager defaultInstance] currentDomain]];
 }
