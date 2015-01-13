@@ -67,10 +67,10 @@ static NSMutableArray * sOperations = nil;
     return [self startRequest:delegate];
 }
 
-//- (BOOL)startRequestWithCompletion:(void (^)(BaseOperation *))completion{
-//    self.completion = completion;
-//    return [self startRequest:nil];
-//}
+- (BOOL)startRequestWithCompletion:(void (^)(BaseResponse *))completion{
+    self.completion = completion;
+    return [self startRequest:nil];
+}
 
 - (NSString *)rootUrl{
     return [NSString stringWithFormat:@"%@index.php?r=", [[DomainManager defaultInstance] currentDomain]];
@@ -210,17 +210,17 @@ static NSMutableArray * sOperations = nil;
                     [self requestDidFail:request];
                     
                 }else {
-                    if ([self.delegate respondsToSelector:@selector(didSucceed:)]) {
+                    if (self.delegate && [self.delegate respondsToSelector:@selector(didSucceed:)]) {
                         [self.delegate didSucceed:self];
                     }
                     
                     if ([self respondsToSelector:@selector(afterSucceed)]) {
                         [self performSelector:@selector(afterSucceed)];
                     }
-                    
-                    if (self.completion) {
-                        self.completion(self.response);
-                    }
+                }
+                
+                if (self.completion) {
+                    self.completion(self.response);
                 }
             }else{
                 NSLog(@"反馈包原型错误");
@@ -242,7 +242,9 @@ static NSMutableArray * sOperations = nil;
     
     NSLog(@"error: code=%d msg=%@", (int)self.response.head.code, self.response.head.msg);
     
-    [self.delegate didFail:self];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didFail:)]) {
+        [self.delegate didFail:self];
+    }
     
     [self removeOperation:self];
 }

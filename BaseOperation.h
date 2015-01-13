@@ -11,12 +11,12 @@
 #import "ASINetworkQueue.h"
 #import "ASIFormDataRequest.h"
 
-#define DEV_MODE                    0
-#ifdef  DEV_MODE
-#define HOST_NAME                   @"http://test.investigation.bl99w.com/"
-#else
-#define HOST_NAME                   @"http://investigation.bl99w.com/"
-#endif
+//#define DEV_MODE                    0
+//#ifdef  DEV_MODE
+//#define HOST_NAME                   @"http://test.investigation.bl99w.com/"
+//#else
+//#define HOST_NAME                   @"http://investigation.bl99w.com/"
+//#endif
 
 #define SUCCESS                     0
 #define ERROR                       -1
@@ -68,7 +68,7 @@ typedef enum{
 
 // 启动请求
 - (BOOL)startRequest:(id<OperationDelegate>)delegate;
-- (BOOL)startRequest:(id<OperationDelegate>)delegate withCompletion:(void (^)(BaseResponse *))completion;
-//- (BOOL)startRequestWithCompletion:(void (^)(BaseOperation *))completion;
+//- (BOOL)startRequest:(id<OperationDelegate>)delegate withCompletion:(void (^)(BaseResponse *))completion;
+- (BOOL)startRequestWithCompletion:(void (^)(BaseResponse *))completion;
 
 @end

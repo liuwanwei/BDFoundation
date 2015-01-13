@@ -78,6 +78,7 @@ static MBProgressManager *sMBProgressManager;
     [self performSelector:@selector(removeHUD) withObject:self afterDelay:1];
 }
 
+// 可自定义停留时间的toast
 + (void)toast:(NSString *)toast delay:(NSTimeInterval)delay inView:(UIView *)view{
     MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     hud.mode = MBProgressHUDModeText;
@@ -86,6 +87,13 @@ static MBProgressManager *sMBProgressManager;
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:delay];
 }
+
+// 简单封装：展示1.5秒后自动消失的toast
++ (void)toast:(NSString *)toast inView:(UIView *)view{
+    [MBProgressManager toast:toast delay:1.5f inView:view];
+}
+
+
 
 - (void)showIndicator {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
