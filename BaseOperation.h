@@ -68,7 +68,8 @@ typedef enum{
 
 // 启动请求
 - (BOOL)startRequest:(id<OperationDelegate>)delegate;
-//- (BOOL)startRequest:(id<OperationDelegate>)delegate withCompletion:(void (^)(BaseResponse *))completion;
 - (BOOL)startRequestWithCompletion:(void (^)(BaseResponse *))completion;
+
+- (NSURL *)makeGetApiUrl:(NSString *)subUrl withParams:(NSDictionary *)params;
 
 @end
