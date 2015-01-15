@@ -62,7 +62,11 @@
 + (NSString *)readableTimeFromSeconds:(NSTimeInterval)interval{
     long hour = interval / (60 * 60);
     long minute = ((long)interval % (60 * 60)) / 60;
-    long second = (long)interval % 60;
+//    long second = (long)interval % 60;
+    
+    if (hour == 0 && minute == 0) {
+        return @"不到1分钟";
+    }
     
     NSString * string = @"";
     if (hour != 0) {
@@ -70,10 +74,10 @@
     }
     
     if (minute != 0 || hour != 0) {
-        string = [string stringByAppendingFormat:@"%02ld分", minute];
+        string = [string stringByAppendingFormat:@"%ld分钟", minute];
     }
-
-    string = [string stringByAppendingFormat:@"%02ld秒", second];
+    
+//    string = [string stringByAppendingFormat:@"%02ld秒", second];
     
     return string;
 }
