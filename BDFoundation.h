@@ -22,6 +22,7 @@
 
 #import "TextEditViewController.h"
 #import "AlertViewTextEditor.h"
+#import "MoveableTableController.h"
 
 #import "MBProgressManager.h"
 #import "DomainManager.h"
