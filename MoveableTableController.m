@@ -53,13 +53,14 @@
     UIGestureRecognizerState state = longPress.state;
     
     CGPoint location = [longPress locationInView:self.tableView];
+    
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
     
     if (self.tableView.delegate && [self.tableView.delegate respondsToSelector:@selector(tableView:canMoveRowAtIndexPath:)]) {
         BOOL ret = (BOOL)[self.tableView.delegate performSelector:@selector(tableView:canMoveRowAtIndexPath:) withObject:indexPath];
         if (!ret) {
-            NSLog(@"不能移动该行");
-            return;
+            NSLog(@"不能移动该行 %d", (int)indexPath.row);
+            indexPath = nil;
         }
     }
     
@@ -110,46 +111,7 @@
                 // ... move the rows.
                 [self.tableView moveRowAtIndexPath:sSourceIndexPath toIndexPath:indexPath];
                 
-                // ... update data source.
-                if (self.tableView.delegate && [self.tableView.delegate respondsToSelector:@selector(tableView:moveRowAtIndexPath:toIndexPath:)]) {
-                    SEL sel = @selector(tableView:moveRowAtIndexPath:toIndexPath:);
-                    // 第一种形式，真机调试有访问越界问题
-//                    objc_msgSend(self.tableView.delegate, sel, self.tableView, sSourceIndexPath, indexPath);
-                    // 第二种形式，真机调试有访问越界问题
-//                    id (*moveRow)(id, SEL, id, id, id) = (id(*)(id, SEL, id, id, id))objc_msgSend;
-//                    moveRow(self.tableView.delegate, sel, self.tableView,sSourceIndexPath, indexPath);
-                    
-                    // 第三种形式：运行良好
-                    UIViewController * vc = (UIViewController *)self.tableView.delegate;
-                    NSMethodSignature * sig = [vc methodSignatureForSelector:sel];
-                    if (sig) {
-                        NSInvocation * invo = [NSInvocation invocationWithMethodSignature:sig];
-                        [invo setTarget:self.tableView.delegate];
-                        [invo setSelector:sel];
-                        [invo setArgument:&_tableView atIndex:2];
-                        [invo setArgument:&sSourceIndexPath atIndex:3];
-                        [invo setArgument:&indexPath atIndex:4];
-                        [invo invoke];
-                    }
-                }
-                
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wundeclared-selector"
-                // 第四种形式，运行良好，但略显麻烦
-//                if (self.tableView.delegate && [self.tableView.delegate respondsToSelector:@selector(moveCellsWithParams:)]) {
-//                    [self.tableView.delegate performSelector:@selector(moveCellsWithParams:)
-//                                                  withObject:@{kTableView:self.tableView,
-//                                                               kSourceIndexPath:sSourceIndexPath,
-//                                                               kTargetIndexPath:indexPath}];
-//                }
-#pragma GCC diagnostic pop
-                
-                // 刷新交换位置后的两个cells的界面。放置位置不对，而且不如刷新整个Cell，简单方便效果好，
-//                __block NSIndexPath * source = sSourceIndexPath;
-//                __block NSIndexPath * dest = indexPath;
-//                dispatch_async(dispatch_get_main_queue(), ^(){
-//                    [self.tableView reloadRowsAtIndexPaths:@[source, dest] withRowAnimation:UITableViewRowAnimationAutomatic];
-//                });
+                [self updateDataSourceFromIndexPath:sSourceIndexPath toIndexPath:indexPath];
                 
                 // ... and update source so it is in sync with UI changes.
                 sSourceIndexPath = indexPath;
@@ -160,6 +122,7 @@
         default: {
             if (sSourceIndexPath) {
                 // Clean up.
+                NSLog(@"state %d", (int)state);
                 UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:sSourceIndexPath];
                 cell.hidden = NO;
                 cell.alpha = 0.0;
@@ -187,6 +150,53 @@
             break;
         }
     }
+}
+
+- (void)updateDataSourceFromIndexPath:(NSIndexPath *)from toIndexPath:(NSIndexPath *)to{
+    
+    // ... update data source.
+    if (self.tableView.delegate && [self.tableView.delegate respondsToSelector:@selector(tableView:moveRowAtIndexPath:toIndexPath:)]) {
+        
+        // 第一种形式，真机调试有访问越界问题
+        //                    objc_msgSend(self.tableView.delegate, sel, self.tableView, sSourceIndexPath, indexPath);
+        // 第二种形式，真机调试有访问越界问题
+        //                    id (*moveRow)(id, SEL, id, id, id) = (id(*)(id, SEL, id, id, id))objc_msgSend;
+        //                    moveRow(self.tableView.delegate, sel, self.tableView,sSourceIndexPath, indexPath);
+        
+        // 第三种形式：运行良好
+        SEL sel = @selector(tableView:moveRowAtIndexPath:toIndexPath:);
+        UIViewController * vc = (UIViewController *)self.tableView.delegate;
+        NSMethodSignature * sig = [vc methodSignatureForSelector:sel];
+        if (sig) {
+            NSInvocation * invo = [NSInvocation invocationWithMethodSignature:sig];
+            [invo setTarget:self.tableView.delegate];
+            [invo setSelector:sel];
+            [invo setArgument:&_tableView atIndex:2];
+            [invo setArgument:&from atIndex:3];
+            [invo setArgument:&to atIndex:4];
+            [invo invoke];
+        }
+    }
+    
+//#pragma GCC diagnostic push
+//#pragma GCC diagnostic ignored "-Wundeclared-selector"
+    // 第四种形式，运行良好，但略显麻烦
+    //                if (self.tableView.delegate && [self.tableView.delegate respondsToSelector:@selector(moveCellsWithParams:)]) {
+    //                    [self.tableView.delegate performSelector:@selector(moveCellsWithParams:)
+    //                                                  withObject:@{kTableView:self.tableView,
+    //                                                               kSourceIndexPath:sSourceIndexPath,
+    //                                                               kTargetIndexPath:indexPath}];
+    //                }
+//#pragma GCC diagnostic pop
+    
+    // 刷新交换位置后的两个cells的界面。放置位置不对，而且不如刷新整个TableView，简单方便效果好，
+    //                __block NSIndexPath * source = sSourceIndexPath;
+    //                __block NSIndexPath * dest = indexPath;
+    //                dispatch_async(dispatch_get_main_queue(), ^(){
+    //                    [self.tableView reloadRowsAtIndexPaths:@[source, dest] withRowAnimation:UITableViewRowAnimationAutomatic];
+    //                });
+
+
 }
 
 #pragma mark - Helper methods
