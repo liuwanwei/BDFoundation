@@ -12,6 +12,7 @@
 
 - (NSString *)mediumChineseString;
 - (NSString *)mediumSimpleString;
+- (NSString *)simpleDateTime;
 
 + (NSString *)longChineseForNow;
 + (NSDate *)fromStringDate:(NSString *)string withFormat:(NSString *)dateFormat;

@@ -29,6 +29,12 @@
     return [formatter stringFromDate:self];
 }
 
+- (NSString *)simpleDateTime{
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    return [formatter stringFromDate:self];
+}
+
 + (NSDate *)fromStringDate:(NSString *)string withFormat:(NSString *)dateFormat{
     NSDateFormatter * format = [[NSDateFormatter alloc] init];
     format.dateFormat = dateFormat;
