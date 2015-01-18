@@ -48,10 +48,6 @@ typedef enum{
 - (NSDictionary *)requestParam;         // 请求参数
 - (NSString *)requestPath;              // url路径
 - (Class)responseClass;                 // 反馈包解析类原型。
-
-@optional   // TODO: 这个是个典型的delegate事件，不该放到datasource
-- (void)afterSucceed;                   // 派生类对返回内容做处理的时机，代替之前的didSucceed.
-
 @end
 
 

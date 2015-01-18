@@ -19,13 +19,13 @@
 
 - (NSString *)mediumChineseString{
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MM月dd日 HH:mm"];
+    [formatter setDateFormat:@"MM月dd日HH:mm"];
     return [formatter stringFromDate:self];
 }
 
 - (NSString *)mediumSimpleString{
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MM-dd HH:mm"];
+    [formatter setDateFormat:@"MM-ddHH:mm"];
     return [formatter stringFromDate:self];
 }
 

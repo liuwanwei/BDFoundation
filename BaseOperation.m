@@ -213,10 +213,6 @@ static NSMutableArray * sOperations = nil;
                     if (self.delegate && [self.delegate respondsToSelector:@selector(didSucceed:)]) {
                         [self.delegate didSucceed:self];
                     }
-                    
-                    if ([self respondsToSelector:@selector(afterSucceed)]) {
-                        [self performSelector:@selector(afterSucceed)];
-                    }
                 }
                 
                 if (self.completion) {
