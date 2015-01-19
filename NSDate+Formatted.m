@@ -25,7 +25,7 @@
 
 - (NSString *)mediumSimpleString{
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MM-ddHH:mm"];
+    [formatter setDateFormat:@"MM-dd HH:mm"];
     return [formatter stringFromDate:self];
 }
 

@@ -170,12 +170,12 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
+    [self.view endEditing:YES];
+    
     NSString * text;
     if (self.type == TextEditorTypeSingleLine) {
-        [self.textField resignFirstResponder];
         text = self.textField.text;
     }else{
-        [self.textView resignFirstResponder];
         text = self.textView.text;
     }
     
