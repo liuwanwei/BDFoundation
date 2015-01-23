@@ -19,6 +19,7 @@
 #import "NSDate+Formatted.h"
 #import "UIImageView+Additional.h"
 #import "NSString+Additional.h"
+#import "UIImage+Resize.h"
 
 #import "TextEditViewController.h"
 #import "AlertViewTextEditor.h"
