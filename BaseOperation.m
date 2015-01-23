@@ -6,7 +6,7 @@
 //
 
 #import "BaseOperation.h"
-#import "NSDictionary+QueryStringBuilder.h"
+#import "category/NSDictionary+QueryStringBuilder.h"
 #import "JDJsonDecoder.h"
 #import "DomainManager.h"
 
