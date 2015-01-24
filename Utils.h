@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class UITableView;
+@class UIViewController;
 
 @interface Utils : NSObject
 
@@ -21,6 +22,9 @@
 + (void)errorWithMessage:(NSString *)message;
 
 + (void)hideExtraCellsForTableView:(UITableView *)tableView;
+
+// 自定义导航栏返回按钮的文字
++ (void)customizeBackNavigationItemTitle:(NSString *)title forViewController:(UIViewController *)vc;
 
 /*
  * 将秒数转换为"XX小时XX分XX秒"这样的形式

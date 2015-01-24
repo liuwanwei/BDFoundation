@@ -38,6 +38,10 @@
     [tableView setTableFooterView:view];
 }
 
++ (void)customizeBackNavigationItemTitle:(NSString *)title forViewController:(UIViewController *)vc{
+    vc.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStylePlain target:nil action:nil];
+}
+
 + (void)customizeNavigationBarForApplication:(UIApplication *)application withColor:(UIColor *)color{
     // 自定义导航栏背景色、文字颜色
     // http://beyondvincent.com/blog/2013/11/03/120-customize-navigation-status-bar-ios-7/#3
