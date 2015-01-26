@@ -25,7 +25,9 @@
 
 // 异步下载远程图片
 - (void)downloadImage:(NSString *)path withPlaceholderImage:(NSString *)placehoderImage;
+
 // 同上，修改名字
 - (void)showImage:(NSString *)url withPlaceHolder:(NSString *)bundleImageName;
+- (void)showImage:(NSString *)url withPlaceHolderImage:(UIImage *)placeHolder;
 
 @end

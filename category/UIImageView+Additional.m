@@ -52,4 +52,10 @@
     return [self downloadImage:url withPlaceholderImage:bundleImageName];
 }
 
+- (void)showImage:(NSString *)url withPlaceHolderImage:(UIImage *)placeHolder{
+    if (url) {
+        [self sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeHolder];
+    }
+}
+
 @end

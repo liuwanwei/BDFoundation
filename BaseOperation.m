@@ -208,6 +208,7 @@ static NSMutableArray * sOperations = nil;
                 self.response = [JDJsonDecoder objectForClass:prototype withData:responseData options:0 error:&error];
                 
                 if (nil == self.response || SUCCESS != self.response.head.code) {
+                    // 反馈包包头不对，也作为错误的一种来处理
                     [self requestDidFail:request];
                     
                 }else {
@@ -219,13 +220,16 @@ static NSMutableArray * sOperations = nil;
                 if (self.completion) {
                     self.completion(self.response);
                 }
+                
             }else{
                 NSLog(@"反馈包原型错误");
             }
+        }else{
+            NSLog(@"ResponseClass未定义");
         }
     }
     
-    // 到此之前不能return，否则永远无法回收缓存，造成内存泄露
+    // 执行到此行之前不能存在return，否则永远无法回收缓存，造成内存泄露
     [self removeOperation:self];
 }
 
@@ -243,6 +247,11 @@ static NSMutableArray * sOperations = nil;
         [self.delegate didFail:self];
     }
     
+    if (self.completion) {
+        self.completion(self.response);
+    }
+    
+    // 执行到此行之前不能存在return，否则永远无法回收缓存，造成内存泄露
     [self removeOperation:self];
 }
 
