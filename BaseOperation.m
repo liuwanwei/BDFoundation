@@ -144,7 +144,7 @@ static NSMutableArray * sOperations = nil;
     ASIHTTPRequest * request = nil;
     if (subUrl.length != 0) {
         NSURL * url = [self makeGetApiUrl:subUrl withParams:params];
-        NSLog(@"%@", url);
+        NSLog(@"GET %@", url);
         request = [ASIHTTPRequest requestWithURL:url];
         [request setUserInfo:[NSDictionary dictionaryWithObject:subUrl forKey:kRequestMetaData]];
     }
@@ -161,6 +161,7 @@ static NSMutableArray * sOperations = nil;
     }
     
     NSURL * url = [self makePostApiUrl:subUrl];
+    NSLog(@"POST %@", url);
     
     return [self createPostRequestWithParam:params withUrl:url];
 }
