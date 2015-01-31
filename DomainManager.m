@@ -60,6 +60,7 @@
         [self.availableDomains addObject:domain];
         if (official) {
             self.officialDomainIndex = [self.availableDomains indexOfObject:domain];
+            [self setCurrentDomain:domain];
         }
     }
 }

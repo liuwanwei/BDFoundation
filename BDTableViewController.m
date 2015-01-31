@@ -43,11 +43,19 @@
     self.HUD.delegate = self;
 }
 
+- (void)startHUDWithUploadMessage{
+    [self startHUDWithMessage:@"上传中"];
+}
+
 - (void)stopHUDWithSuccessMessage:(NSString *)message{
     self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark"]];
     self.HUD.mode = MBProgressHUDModeCustomView;
     self.HUD.labelText = message;
     [self.HUD hide:YES afterDelay:1];
+}
+
+- (void)stopHUDWithSuccessUploadMessage{
+    [self stopHUDWithSuccessMessage:@"上传成功"];
 }
 
 - (void)stopHUDWithErrorMessage:(NSString *)message{
@@ -57,6 +65,10 @@
     self.HUD.removeFromSuperViewOnHide = YES;
     [self.HUD hide:YES afterDelay:1.5f];
 
+}
+
+- (void)stopHUDWithErrorUploadMessage{
+    [self stopHUDWithErrorMessage:@"上传失败"];
 }
 
 

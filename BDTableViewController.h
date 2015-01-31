@@ -14,7 +14,12 @@
 - (void)makeMoveable;
 
 - (void)startHUDWithMessage:(NSString *)message;
+- (void)startHUDWithUploadMessage;
+
 - (void)stopHUDWithSuccessMessage:(NSString *)message;
+- (void)stopHUDWithSuccessUploadMessage;
+
 - (void)stopHUDWithErrorMessage:(NSString *)message;
+- (void)stopHUDWithErrorUploadMessage;
 
 @end
