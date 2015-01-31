@@ -61,6 +61,8 @@
 //数学
 #define PI 3.14159
 
+#define kYes        @"yes"
+#define kNo         @"no"
 
 //输出frame(frame是结构体，没法%@)
 //#define LOGFRAME(f) NSLog(@"\nx:%f\ny:%f\nwidth:%f\nheight:%f\n",f.origin.x,f.origin.y,f.size.width,f.size.height)
