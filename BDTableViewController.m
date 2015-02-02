@@ -71,6 +71,9 @@
     [self stopHUDWithErrorMessage:@"上传失败"];
 }
 
+- (void)stopHUD{
+    [self.HUD hide:YES];
+}
 
 /*
 #pragma mark - Navigation

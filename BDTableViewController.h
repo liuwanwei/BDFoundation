@@ -22,4 +22,6 @@
 - (void)stopHUDWithErrorMessage:(NSString *)message;
 - (void)stopHUDWithErrorUploadMessage;
 
+- (void)stopHUD;
+
 @end
