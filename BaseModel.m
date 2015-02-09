@@ -11,6 +11,17 @@
 
 @implementation BaseModel
 
+- (id)init{
+    if (self = [super init]) {
+        CFUUIDRef uuid = CFUUIDCreate(NULL);
+        NSString *uuidStr = (__bridge_transfer NSString *)CFUUIDCreateString(NULL, uuid);
+        self.iid = uuidStr;
+        CFRelease(uuid);
+    }
+    
+    return self;
+}
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     [self setWithCoder:aDecoder];
