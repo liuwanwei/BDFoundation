@@ -18,7 +18,7 @@
 
 @interface BaseModel : NSObject <NSCoding>
 
-@property (nonatomic, copy) NSString * id;
+@property (nonatomic, copy) NSString * iid;         // index id的简写
 @property (nonatomic, copy) NSString * createTime;
 
 @property (nonatomic, weak) id parentObject;
