@@ -23,4 +23,6 @@
 
 @property (nonatomic, weak) id parentObject;
 
+- (id)initWithUUID;
+
 @end
