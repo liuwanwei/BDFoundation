@@ -17,6 +17,8 @@
         NSString *uuidStr = (__bridge_transfer NSString *)CFUUIDCreateString(NULL, uuid);
         self.iid = uuidStr;
         CFRelease(uuid);
+        
+        self.createDate = [NSDate date];
     }
     
     return self;

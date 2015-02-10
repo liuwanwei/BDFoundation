@@ -19,7 +19,9 @@
 @interface BaseModel : NSObject <NSCoding>
 
 @property (nonatomic, copy) NSString * iid;         // index id的简写
-@property (nonatomic, copy) NSString * createTime;
+
+@property (nonatomic, copy) NSString * createTime;  // 用于通信协议中
+@property (nonatomic, strong) NSDate * createDate;  // 不用在通信协议中，仅仅排序时使用
 
 @property (nonatomic, weak) id parentObject;
 
