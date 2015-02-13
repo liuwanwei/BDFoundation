@@ -18,6 +18,7 @@
 
 @interface BaseModel : NSObject <NSCoding>
 
+@property (nonatomic, copy) NSString * id;          // id , deprecated, use iid instead
 @property (nonatomic, copy) NSString * iid;         // index id的简写
 
 @property (nonatomic, copy) NSString * createTime;  // 用于通信协议中
