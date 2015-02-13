@@ -44,7 +44,7 @@
 
 + (void)customizeNavigationBarForApplication:(UIApplication *)application withColor:(UIColor *)color{
     // 自定义导航栏背景色、文字颜色
-    // http://beyondvincent.com/blog/2013/11/03/120-customize-navigation-status-bar-ios-7/#3
+    // http://beyondvincent.com/2013/11/03/2013-11-03-120-customize-navigation-status-bar-ios-7/#6
     // 导航栏背景色
     [[UINavigationBar appearance] setBarTintColor:color];
     
