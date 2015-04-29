@@ -10,6 +10,7 @@
 
 @class UITableView;
 @class UIViewController;
+@class UIWebView;
 
 @interface Utils : NSObject
 
@@ -33,5 +34,13 @@
 
 + (void)customizeStatusBarForApplication:(id)application;
 + (void)customizeNavigationBarForApplication:(id)application withColor:(id)color;
+
+/**
+ *  加载本地Html页面
+ *
+ *  @param fileName
+ *  @param webView
+ */
++ (void)loadHtml:(NSString *)fileName webView:(UIWebView *)webView;
 
 @end

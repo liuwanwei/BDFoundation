@@ -86,5 +86,11 @@
     return string;
 }
 
++ (void)loadHtml:(NSString *)fileName webView:(UIWebView *)webView {
+    NSString * htmlPath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"html"];
+    NSString * appHtml  = [NSString stringWithContentsOfFile:htmlPath encoding:NSUTF8StringEncoding error:nil];
+    NSURL * baseURL     = [NSURL fileURLWithPath:htmlPath];
+    [webView loadHTMLString:appHtml baseURL:baseURL];
+}
 
 @end
