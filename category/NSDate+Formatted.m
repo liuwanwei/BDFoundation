@@ -47,4 +47,17 @@
     return [format dateFromString:string];
 }
 
++ (NSString *)todayDateTime {
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    return [formatter stringFromDate:[NSDate date]];
+}
+
++ (NSString *)todayDate {
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    return [formatter stringFromDate:[NSDate date]];
+
+}
+
 @end

@@ -18,4 +18,6 @@
 + (NSString *)longChineseForNow;
 + (NSDate *)fromStringDate:(NSString *)string withFormat:(NSString *)dateFormat;
 
++ (NSString *)todayDateTime;
++ (NSString *)todayDate;
 @end
