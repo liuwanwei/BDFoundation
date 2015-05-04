@@ -18,7 +18,7 @@
 
 // 显示圆形图像
 - (void)makeCircle;
-- (void)makeCircleWithBorderColor:(UIColor *)color;
+- (void)makeCircleWithBorderColor:(UIColor *)color withWidth:(CGFloat)width;
 
 // 显示倒圆角
 - (void)makeCornorRadius:(CGFloat)radius;

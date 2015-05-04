@@ -29,9 +29,9 @@
     self.layer.masksToBounds = YES;
 }
 
-- (void)makeCircleWithBorderColor:(UIColor *)color{
+- (void)makeCircleWithBorderColor:(UIColor *)color withWidth:(CGFloat)width{
     [self makeCircle];
-    [self addBorderWithWidth:3 withColor:color];
+    [self addBorderWithWidth:width withColor:color];
 }
 
 - (void)makeCornorRadius:(CGFloat)radius{
