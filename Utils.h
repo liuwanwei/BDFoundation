@@ -16,6 +16,7 @@
 
 // 从Main Storyboard中加载一个UIViewController
 + (id)viewControllerWithIdentifier:(NSString *)identifier;
++ (id)viewControllerwithStoryboard:(NSString *)storyboard withIdentifier:(NSString *)identifier;
 
 // 展示一个UIAlertView
 + (void)warningWithMessage:(NSString *)message;
