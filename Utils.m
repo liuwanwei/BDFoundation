@@ -12,7 +12,11 @@
 @implementation Utils
 
 + (id)viewControllerWithIdentifier:(NSString *)identifier{
-    UIStoryboard * mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    return [Utils viewControllerwithStoryboard:@"Main" withIdentifier:identifier];
+}
+
++ (id)viewControllerwithStoryboard:(NSString *)storyboard withIdentifier:(NSString *)identifier {
+    UIStoryboard * mainStoryboard = [UIStoryboard storyboardWithName:storyboard bundle:nil];
     return [mainStoryboard instantiateViewControllerWithIdentifier:identifier];
 }
 
