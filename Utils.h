@@ -11,6 +11,7 @@
 @class UITableView;
 @class UIViewController;
 @class UIWebView;
+@class UIImage;
 
 @interface Utils : NSObject
 
@@ -35,6 +36,7 @@
 
 + (void)customizeStatusBarForApplication:(id)application;
 + (void)customizeNavigationBarForApplication:(id)application withColor:(id)color;
++ (void)customizeNavigationBarForApplication:(id)application withImage:(UIImage *)image;
 
 /**
  *  加载本地Html页面
