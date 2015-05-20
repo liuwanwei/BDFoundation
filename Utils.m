@@ -59,6 +59,15 @@
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];
 }
 
++ (void)customizeNavigationBarForApplication:(id)application withImage:(UIImage *)image {
+    [[UINavigationBar appearance] setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+    // 导航按钮颜色：返回或item按钮颜色
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    // Title文字颜色
+    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];
+}
+
 + (void)customizeStatusBarForApplication:(UIApplication *)application{
     // 自定义状态栏颜色（记得先修改plist，上面链接中有描述）
     [application setStatusBarHidden:NO];
