@@ -39,11 +39,19 @@
 + (void)customizeNavigationBarForApplication:(id)application withImage:(UIImage *)image;
 
 /**
- *  加载本地Html页面
+ *  加载本地Html页面，文件在打包在App内部
  *
  *  @param fileName
  *  @param webView
  */
 + (void)loadHtml:(NSString *)fileName webView:(UIWebView *)webView;
+
+/**
+ *  加载本地html页面，图片资源使用本地App内部资源
+ *
+ *  @param filePath
+ *  @param webView
+ */
++ (void)loadHtmlWithFilePath:(NSString *)filePath webView:(UIWebView *)webView;
 
 @end

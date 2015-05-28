@@ -43,7 +43,7 @@
 }
 
 + (void)customizeBackNavigationItemTitle:(NSString *)title forViewController:(UIViewController *)vc{
-    vc.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStylePlain target:nil action:nil];
+    vc.navigationController.navigationBar.topItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStyleBordered target:nil action:nil];
 }
 
 + (void)customizeNavigationBarForApplication:(UIApplication *)application withColor:(UIColor *)color{
@@ -106,6 +106,12 @@
         NSURL * baseURL     = [NSURL fileURLWithPath:htmlPath];
         [webView loadHTMLString:appHtml baseURL:baseURL];
     }
+}
+
++ (void)loadHtmlWithFilePath:(NSString *)filePath webView:(UIWebView *)webView {
+    NSString * appHtml = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+    NSURL * baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle]  bundlePath]];
+    [webView loadHTMLString:appHtml baseURL:baseURL];
 }
 
 @end
