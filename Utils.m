@@ -43,7 +43,7 @@
 }
 
 + (void)customizeBackNavigationItemTitle:(NSString *)title forViewController:(UIViewController *)vc{
-    vc.navigationController.navigationBar.topItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStyleBordered target:nil action:nil];
+    vc.navigationController.navigationBar.topItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 + (void)customizeNavigationBarForApplication:(UIApplication *)application withColor:(UIColor *)color{
