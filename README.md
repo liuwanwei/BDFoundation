@@ -7,7 +7,7 @@ BDFoundation
 
 添加submodule：
 
-1. git submodule add https://github.com/liuwanwei/BDFoundation.git libs/BDFoundation
+1. git submodule add https://github.com/liuwanwei/BDFoundation.git submodules/BDFoundation
 
 添加pod：
 
