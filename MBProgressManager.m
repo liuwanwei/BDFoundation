@@ -103,4 +103,14 @@ static MBProgressManager *sMBProgressManager;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
+- (void)stopHUDWithSuccessMessage:(NSString *)message{
+    [self hideIndicator];
+    _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark"]];
+    _HUD.mode = MBProgressHUDModeCustomView;
+    _HUD.labelText = message;
+    [_HUD removeFromSuperViewOnHide];
+    [_HUD hide:YES afterDelay:1];
+    _HUD = nil;
+}
+
 @end
