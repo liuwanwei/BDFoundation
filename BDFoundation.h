@@ -21,6 +21,8 @@
 #import "NSString+Additional.h"
 #import "UIImage+Resize.h"
 #import "UINavigationItem+Additions.h"
+#import "UIButton+Additional.h"
+#import "UIView+Additional.h"
 
 #import "TextEditViewController.h"
 #import "AlertViewTextEditor.h"
