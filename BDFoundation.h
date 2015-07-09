@@ -9,6 +9,7 @@
 #ifndef investigation_BDFoundation_h
 #define investigation_BDFoundation_h
 
+#import "BaseModel.h"
 #import "BaseOperation.h"
 #import "Utils.h"
 #import "Macro.h"
