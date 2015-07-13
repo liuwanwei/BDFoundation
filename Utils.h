@@ -54,4 +54,11 @@
  */
 + (void)loadHtmlWithFilePath:(NSString *)filePath webView:(UIWebView *)webView;
 
+/**
+ *  加载bundle Json文件
+ *
+ *  @param fileName
+ */
++ (NSDictionary *)loadJsonFileFromBundel:(NSString *)fileName;
+
 @end
