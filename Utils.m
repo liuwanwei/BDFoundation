@@ -114,4 +114,16 @@
     [webView loadHTMLString:appHtml baseURL:baseURL];
 }
 
++ (NSDictionary *)loadJsonFile:(NSString *)fileName {
+    NSDictionary * result = nil;
+    
+    NSString * dataFilePath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"json"];
+    if (dataFilePath) {
+        NSData * data = [NSData dataWithContentsOfFile:dataFilePath];
+        result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    }
+    
+    return result;
+}
+
 @end
