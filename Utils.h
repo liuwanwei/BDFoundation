@@ -59,6 +59,6 @@
  *
  *  @param fileName
  */
-+ (NSDictionary *)loadJsonFile:(NSString *)fileName;
++ (NSDictionary *)loadJsonFileFromBundel:(NSString *)fileName;
 
 @end

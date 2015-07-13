@@ -114,7 +114,7 @@
     [webView loadHTMLString:appHtml baseURL:baseURL];
 }
 
-+ (NSDictionary *)loadJsonFile:(NSString *)fileName {
++ (NSDictionary *)loadJsonFileFromBundel:(NSString *)fileName {
     NSDictionary * result = nil;
     
     NSString * dataFilePath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"json"];
