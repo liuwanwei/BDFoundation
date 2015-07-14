@@ -13,4 +13,6 @@
 // 显示倒圆角
 - (void)makeCornorRadius:(CGFloat)radius;
 
+- (void)makeCircle;
+
 @end
