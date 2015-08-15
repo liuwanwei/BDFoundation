@@ -7,7 +7,7 @@
 //
 
 #import "BDiCloudManager.h"
-#import "WorkoutResult.h"
+//#import "WorkoutResult.h"
 #import <EXTScope.h>
 
 static NSString * const AllRecords = @"TRUEPREDICATE";
