@@ -33,4 +33,7 @@
 #import "MBProgressManager.h"
 #import "DomainManager.h"
 
+#import "BDiCloudManager.h"
+#import "iCloudModel.h"
+
 #endif

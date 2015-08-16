@@ -9,10 +9,32 @@
 #import <Foundation/Foundation.h>
 #import <CloudKit/CloudKit.h>
 
+@protocol BDiCloudRecordDataSource <NSObject>
+
+@required
+
+/**
+ *  将需要存储到 iCloud 中的记录转换成 iCloud CKRecord 对象
+ *
+ *  @return converted CKRecord object
+ */
+- (CKRecord *)convertToiCloudRecordObject;
+
+/**
+ *  从网络查询得到的 iCloud CKRecord 对象，恢复成一个本地记录对象
+ *
+ *  @param record 从 iCloud 查询到的对象
+ *
+ *  @return 恢复后的对象实例
+ */
+- (instancetype)initFromiCloudRecordObject:(CKRecord *)record;
+
+@end
+
 @protocol BDiCloudDelegate <NSObject>
 
 - (void)successfullySavedRecord:(CKRecord *)record;
-- (void)didReceiveWorkoutResults:(NSArray *)results;
+- (void)didReceiveRecords:(NSArray *)results;
 
 @end
 

@@ -25,8 +25,8 @@
 @property (nonatomic, copy) NSString * createTime;  // 字符串类型，可用于通信协议中
 
 /**
- *  数据的创建时间，只有主动使用 initWithUUID 初始化对象时，才会被赋初值。
  *  NSDate 类型，可以通过通过 AutoCoding 库序列化后存储在本地。
+ *  代表数据创建的时间，只有主动使用 initWithUUID 初始化对象时，才会被赋初值。
  *  在网络通信中传输时间属性时，请使用 createTime 属性。
  */
 @property (nonatomic, strong) NSDate * createDate;

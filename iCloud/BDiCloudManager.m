@@ -58,8 +58,8 @@ static NSString * const AllRecords = @"TRUEPREDICATE";
                 if (error) {
                     NSLog(@"An error occured in %@: %@", NSStringFromSelector(_cmd), error);
                 }else{
-                    if (self.delegate && [self.delegate respondsToSelector:@selector(didReceiveWorkoutResults:)]) {
-                        [self.delegate performSelector:@selector(didReceiveWorkoutResults:) withObject:results];
+                    if (self.delegate && [self.delegate respondsToSelector:@selector(didReceiveRecords:)]) {
+                        [self.delegate performSelector:@selector(didReceiveRecords:) withObject:results];
                     }
                 }
             }];
