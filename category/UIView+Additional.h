@@ -15,4 +15,7 @@
 
 - (void)makeCircle;
 
+// 添加外边框线
+- (void)addBorderWithWidth:(NSInteger)width withColor:(UIColor *)color;
+
 @end
