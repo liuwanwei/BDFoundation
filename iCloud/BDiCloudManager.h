@@ -40,6 +40,7 @@
 
 @interface BDiCloudManager : NSObject
 
+@property (nonatomic) BOOL serviceReady;
 @property (nonatomic, assign) id<BDiCloudDelegate> delegate;
 
 + (instancetype)sharedInstance;

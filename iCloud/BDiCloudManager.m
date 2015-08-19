@@ -53,16 +53,20 @@ static NSString * const AllRecords = @"TRUEPREDICATE";
             NSPredicate * predict = [NSPredicate predicateWithValue:YES];
             CKQuery * query = [[CKQuery alloc] initWithRecordType:recordType predicate:predict];
             
-            [_privateDatabase performQuery:query  inZoneWithID:nil completionHandler:^(NSArray * results, NSError * error){
-                
+            [_privateDatabase performQuery:query  inZoneWithID:nil completionHandler:^(NSArray * results, NSError * error){                
                 if (error) {
                     NSLog(@"An error occured in %@: %@", NSStringFromSelector(_cmd), error);
                 }else{
                     if (self.delegate && [self.delegate respondsToSelector:@selector(didReceiveRecords:)]) {
                         [self.delegate performSelector:@selector(didReceiveRecords:) withObject:results];
                     }
+                    
+                    _serviceReady = YES;
                 }
             }];
+        }
+        else{
+            NSLog(@"账户没有 iCloudKit 权限");
         }
     }];
 }
@@ -78,14 +82,19 @@ static NSString * const AllRecords = @"TRUEPREDICATE";
         if (accountStatus == CKAccountStatusAvailable) {
             [_privateDatabase saveRecord:record completionHandler:^(CKRecord * record, NSError * error){
                 if (error) {
-                    NSLog(@"iCloud/CKRecord 添加失败：An error occured in %@: %@", NSStringFromSelector(_cmd), error);
+                    NSLog(@"添加记录失败：%@, An error occured in %@: %@", record.recordType, NSStringFromSelector(_cmd), error);
                 }else{
-                    NSLog(@"添加训练结果（iCloud/CKRecord）数据成功");
+                    NSLog(@"添加记录成功：%@", record.recordType);
                     if (self.delegate && [self.delegate respondsToSelector:@selector(successfullySavedRecord:)]) {
                         [self.delegate performSelector:@selector(successfullySavedRecord:) withObject:record];
                     }
+                    
+                    _serviceReady = YES;
                 }
             }];
+        }
+        else{
+            NSLog(@"账户没有 iCloudKit 权限");
         }
     }];
 }
