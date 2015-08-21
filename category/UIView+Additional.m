@@ -25,4 +25,11 @@
     layer.borderColor = [color CGColor];
     layer.borderWidth = width;
 }
+
+- (void)addAction:(SEL)action target:(id)target {
+    UITapGestureRecognizer * singleTap =  [[UITapGestureRecognizer alloc] initWithTarget:target action:action];
+    [singleTap setNumberOfTapsRequired:1];
+    [self setUserInteractionEnabled:YES];
+    [self addGestureRecognizer:singleTap];
+}
 @end
