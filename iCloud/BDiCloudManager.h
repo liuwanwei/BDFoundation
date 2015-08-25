@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <CloudKit/CloudKit.h>
 
+extern NSString * const CloudKitNotAvailableNote;   // 当前 Apple ID 的 CloudKit 未打开时广播此消息
+
 @protocol BDiCloudRecordDataSource <NSObject>
 
 @required

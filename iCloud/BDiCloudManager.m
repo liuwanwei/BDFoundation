@@ -7,10 +7,11 @@
 //
 
 #import "BDiCloudManager.h"
-//#import "WorkoutResult.h"
 #import <EXTScope.h>
 
 static NSString * const AllRecords = @"TRUEPREDICATE";
+
+NSString * const CloudKitNotAvailableNote = @"CloudKitNotAvailable";
 
 @implementation BDiCloudManager{
     __weak CKContainer * _container;
@@ -67,6 +68,7 @@ static NSString * const AllRecords = @"TRUEPREDICATE";
         }
         else{
             NSLog(@"账户没有 iCloudKit 权限");
+            [self postCloudKitNotAvailableNotification];
         }
     }];
 }
@@ -115,5 +117,8 @@ static NSString * const AllRecords = @"TRUEPREDICATE";
     }];
 }
 
+- (void)postCloudKitNotAvailableNotification{
+    [[NSNotificationCenter defaultCenter] postNotificationName:CloudKitNotAvailableNote object:self];
+}
 
 @end
