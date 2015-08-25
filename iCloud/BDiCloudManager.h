@@ -36,6 +36,9 @@
 - (void)successfullySavedRecord:(CKRecord *)record;
 - (void)didReceiveRecords:(NSArray *)results;
 
+@optional
+- (void)successfullyDeletedDefaultZone;
+
 @end
 
 @interface BDiCloudManager : NSObject
@@ -47,5 +50,7 @@
 
 - (void)queryRecordsWithType:(NSString *)recordType;
 - (void)addRecord:(CKRecord *)record;
+
+- (void)deleteDefaultRecordZone;
 
 @end

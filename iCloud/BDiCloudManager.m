@@ -99,5 +99,21 @@ static NSString * const AllRecords = @"TRUEPREDICATE";
     }];
 }
 
+- (void)deleteDefaultRecordZone{
+    [_container accountStatusWithCompletionHandler:^(CKAccountStatus accountStatus, NSError * error){
+        [_privateDatabase deleteRecordZoneWithID:[CKRecordZone defaultRecordZone].zoneID completionHandler:^(CKRecordZoneID * recordZoneID, NSError * error){
+            if (error) {
+                NSLog(@"删除默认存储空间失败");
+            }else{
+                NSLog(@"删除默认存储空间成功");
+                
+                if (self.delegate && [self.delegate respondsToSelector:@selector(successfullyDeletedDefaultZone)]) {
+                    [self.delegate performSelector:@selector(successfullyDeletedDefaultZone)];
+                }
+            }
+        }];
+    }];
+}
+
 
 @end
