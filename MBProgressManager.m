@@ -113,4 +113,21 @@ static MBProgressManager *sMBProgressManager;
     _HUD = nil;
 }
 
+- (void)showSuccessMessage:(NSString *)message {
+    if (nil == _HUD) {
+        _HUD = [[MBProgressHUD alloc] initWithWindow:[UIApplication sharedApplication].keyWindow];
+    }else {
+        [_HUD removeFromSuperview];
+    }
+    
+    [[UIApplication sharedApplication].keyWindow addSubview:_HUD];
+    
+    _HUD.mode = MBProgressHUDModeCustomView;
+    _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark"]];
+    _HUD.labelText = message;
+    [_HUD removeFromSuperViewOnHide];
+    [_HUD show:YES];
+    [_HUD hide:YES afterDelay:1];
+}
+
 @end
