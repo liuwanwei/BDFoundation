@@ -9,13 +9,11 @@
 #import "BDiCloudManager.h"
 #import <EXTScope.h>
 
-static NSString * const AllRecords = @"TRUEPREDICATE";
-
 NSString * const CloudKitNotAvailableNote = @"CloudKitNotAvailable";
 
+static BOOL sIsServiceReady = NO;
+
 @implementation BDiCloudManager{
-    __weak CKContainer * _container;
-    __weak CKDatabase * _privateDatabase;
 }
 
 + (instancetype)sharedInstance{
@@ -54,15 +52,20 @@ NSString * const CloudKitNotAvailableNote = @"CloudKitNotAvailable";
             NSPredicate * predict = [NSPredicate predicateWithValue:YES];
             CKQuery * query = [[CKQuery alloc] initWithRecordType:recordType predicate:predict];
             
+            // TODO: 当返回结果达到几百个时，要用 CKQueryOperation 查询，详见本调用文档
             [_privateDatabase performQuery:query  inZoneWithID:nil completionHandler:^(NSArray * results, NSError * error){                
                 if (error) {
-                    NSLog(@"An error occured in %@: %@", NSStringFromSelector(_cmd), error);
+                    NSLog(@"查询记录失败: %@: %@", NSStringFromSelector(_cmd), error);
+                    if (_delegate && [_delegate respondsToSelector:@selector(queryRecordsFailedWithError:)]) {
+                        [_delegate queryRecordsFailedWithError:error];
+                    }
+                    
                 }else{
                     if (self.delegate && [self.delegate respondsToSelector:@selector(didReceiveRecords:)]) {
                         [self.delegate performSelector:@selector(didReceiveRecords:) withObject:results];
                     }
                     
-                    _serviceReady = YES;
+                    sIsServiceReady = YES;
                 }
             }];
         }
@@ -85,13 +88,17 @@ NSString * const CloudKitNotAvailableNote = @"CloudKitNotAvailable";
             [_privateDatabase saveRecord:record completionHandler:^(CKRecord * record, NSError * error){
                 if (error) {
                     NSLog(@"添加记录失败：%@, An error occured in %@: %@", record.recordType, NSStringFromSelector(_cmd), error);
+                    if (_delegate && [_delegate respondsToSelector:@selector(saveRecord:failedWithError:)]) {
+                        [_delegate performSelector:@selector(saveRecord:failedWithError:) withObject:record withObject:error];
+                    }
+                    
                 }else{
                     NSLog(@"添加记录成功：%@", record.recordType);
                     if (self.delegate && [self.delegate respondsToSelector:@selector(successfullySavedRecord:)]) {
                         [self.delegate performSelector:@selector(successfullySavedRecord:) withObject:record];
                     }
                     
-                    _serviceReady = YES;
+                    sIsServiceReady = YES;
                 }
             }];
         }
@@ -119,6 +126,10 @@ NSString * const CloudKitNotAvailableNote = @"CloudKitNotAvailable";
 
 - (void)postCloudKitNotAvailableNotification{
     [[NSNotificationCenter defaultCenter] postNotificationName:CloudKitNotAvailableNote object:self];
+}
+
++ (BOOL)serviceReady{
+    return sIsServiceReady;
 }
 
 @end

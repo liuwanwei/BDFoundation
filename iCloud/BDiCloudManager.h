@@ -11,42 +11,29 @@
 
 extern NSString * const CloudKitNotAvailableNote;   // 当前 Apple ID 的 CloudKit 未打开时广播此消息
 
-@protocol BDiCloudRecordDataSource <NSObject>
-
-@required
-
-/**
- *  将需要存储到 iCloud 中的记录转换成 iCloud CKRecord 对象
- *
- *  @return converted CKRecord object
- */
-- (CKRecord *)convertToiCloudRecordObject;
-
-/**
- *  从网络查询得到的 iCloud CKRecord 对象，恢复成一个本地记录对象
- *
- *  @param record 从 iCloud 查询到的对象
- *
- *  @return 恢复后的对象实例
- */
-- (instancetype)initFromiCloudRecordObject:(CKRecord *)record;
-
-@end
-
 @protocol BDiCloudDelegate <NSObject>
 
-- (void)successfullySavedRecord:(CKRecord *)record;
-- (void)didReceiveRecords:(NSArray *)results;
-
 @optional
+
+- (void)successfullySavedRecord:(CKRecord *)record;
+- (void)saveRecord:(CKRecord *)record failedWithError:(NSError *)error;
+
+- (void)didReceiveRecords:(NSArray *)results;
+- (void)queryRecordsFailedWithError:(NSError *)error;
+
+
 - (void)successfullyDeletedDefaultZone;
 
 @end
 
 @interface BDiCloudManager : NSObject
 
-@property (nonatomic) BOOL serviceReady;
+//@property (nonatomic) BOOL serviceReady;
 @property (nonatomic, assign) id<BDiCloudDelegate> delegate;
+
+@property (nonatomic, weak) CKContainer * container;
+@property (nonatomic, weak) CKDatabase * privateDatabase;
+
 
 + (instancetype)sharedInstance;
 
@@ -54,5 +41,7 @@ extern NSString * const CloudKitNotAvailableNote;   // 当前 Apple ID 的 Cloud
 - (void)addRecord:(CKRecord *)record;
 
 - (void)deleteDefaultRecordZone;
+
++ (BOOL)serviceReady;
 
 @end
