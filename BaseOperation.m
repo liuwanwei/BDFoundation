@@ -255,12 +255,12 @@ static NSMutableArray * sOperations = nil;
     [self removeOperation:self];
 }
 
+- (RequestType)requestType{
+    return RequestTypeInvalid;
+}
 
 - (ASIHTTPRequest *)createRequest {
-    RequestType type = RequestTypeInvalid;
-    if ([self respondsToSelector:@selector(requestType)]) {
-        type = (RequestType)[self performSelector:@selector(requestType)];
-    }
+    RequestType type = [self requestType];
     
     if (type != RequestTypeInvalid) {
         NSDictionary * param = nil;
