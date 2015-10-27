@@ -17,6 +17,6 @@
 // 显示倒圆角
 - (void)makeCornorRadius:(CGFloat)radius;
 
-- (void)addBorderWithWidth:(NSInteger)width withColor:(UIColor *)color;
+- (void)addBorderWithWidth:(CGFloat)width withColor:(UIColor *)color;
 
 @end
