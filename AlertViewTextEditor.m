@@ -13,6 +13,7 @@
 
 @property (nonatomic, copy) NSString * originalText;
 @property (nonatomic, strong) TextConfirmed confirmedBlock;
+@property (nonatomic, strong) ViewDismissed dismissedBlock;
 
 @end
 
@@ -102,6 +103,22 @@
     [alertView show];
 }
 
+- (void)showWithPlaceHolder:(NSString *)text title:(NSString *)title dismissed:(ViewDismissed)block{
+    self.title = title;
+    self.dismissedBlock = block;
+    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:title
+                                                         message:nil
+                                                        delegate:self
+                                               cancelButtonTitle:@"取消"
+                                               otherButtonTitles:@"确定", nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    
+    UITextField * textField = [alertView textFieldAtIndex:0];
+    textField.placeholder = text;
+    
+    [alertView show];
+}
+
 #pragma mark UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
@@ -120,6 +137,14 @@
         
         if (self.confirmedBlock) {
             self.confirmedBlock(name);
+        }
+        
+        if (self.dismissedBlock) {
+            self.dismissedBlock(name, NO);
+        }
+    }else if(buttonIndex == alertView.cancelButtonIndex){
+        if (self.dismissedBlock) {
+            self.dismissedBlock(nil, YES);
         }
     }
 }
