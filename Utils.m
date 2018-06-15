@@ -49,7 +49,9 @@
 + (void)customizeNavigationBarForApplication:(UIApplication *)application withColor:(UIColor *)color{
     // 自定义导航栏背景色、文字颜色
     // http://beyondvincent.com/2013/11/03/2013-11-03-120-customize-navigation-status-bar-ios-7/#6
-    // 导航栏背景色
+    
+    //  导航栏背景色，不使用 tintColor
+    [[UINavigationBar appearance] setTranslucent:NO];
     [[UINavigationBar appearance] setBarTintColor:color];
     
     // 导航按钮颜色：返回或item按钮颜色
