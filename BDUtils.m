@@ -6,13 +6,13 @@
 //  Copyright (c) 2014年 buddysoft. All rights reserved.
 //
 
-#import "Utils.h"
+#import "BDUtils.h"
 #import <UIKit/UIKit.h>
 
-@implementation Utils
+@implementation BDUtils
 
 + (id)viewControllerWithIdentifier:(NSString *)identifier{
-    return [Utils viewControllerwithStoryboard:@"Main" withIdentifier:identifier];
+    return [BDUtils viewControllerwithStoryboard:@"Main" withIdentifier:identifier];
 }
 
 + (id)viewControllerwithStoryboard:(NSString *)storyboard withIdentifier:(NSString *)identifier {

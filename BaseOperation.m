@@ -94,10 +94,9 @@ static NSMutableArray * sOperations = nil;
     ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:url];
     
     // 某些Post请求需要填充认证消息到HTTP HEADER
-    if (self.needUserAuthInfo) {
-        // TODO: 做成DataSource形势让派生类提供认证信息
+//    if (self.needUserAuthInfo) {
 //        [self addUserAuthInfo:request];
-    }
+//    }
     
     // 处理文件数据
     NSString * filePath = [params objectForKey:kUploadFilename];
@@ -256,12 +255,12 @@ static NSMutableArray * sOperations = nil;
     [self removeOperation:self];
 }
 
+- (RequestType)requestType{
+    return RequestTypeInvalid;
+}
 
 - (ASIHTTPRequest *)createRequest {
-    RequestType type = RequestTypeInvalid;
-    if ([self respondsToSelector:@selector(requestType)]) {
-        type = (RequestType)[self performSelector:@selector(requestType)];
-    }
+    RequestType type = [self requestType];
     
     if (type != RequestTypeInvalid) {
         NSDictionary * param = nil;

@@ -13,7 +13,7 @@
 @class UIWebView;
 @class UIImage;
 
-@interface Utils : NSObject
+@interface BDUtils : NSObject
 
 // 从Main Storyboard中加载一个UIViewController
 + (id)viewControllerWithIdentifier:(NSString *)identifier;

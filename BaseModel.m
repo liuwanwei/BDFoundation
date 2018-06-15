@@ -12,12 +12,13 @@
 
 - (id)initWithUUID{
     if (self = [super init]) {
-        CFUUIDRef uuid = CFUUIDCreate(NULL);
-        NSString *uuidStr = (__bridge_transfer NSString *)CFUUIDCreateString(NULL, uuid);
-        self.iid = uuidStr;
-        CFRelease(uuid);
+//        CFUUIDRef uuid = CFUUIDCreate(NULL);
+//        NSString *uuidStr = (__bridge_transfer NSString *)CFUUIDCreateString(NULL, uuid);
+//        self.iid = uuidStr;
+//        CFRelease(uuid);
         
-        self.createDate = [NSDate date];
+        _iid = [NSUUID UUID].UUIDString;
+        _createDate = [NSDate date];
     }
     
     return self;

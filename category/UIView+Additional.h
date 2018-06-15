@@ -15,4 +15,10 @@
 
 - (void)makeCircle;
 
+// 添加外边框线
+- (void)addBorderWithWidth:(NSInteger)width withColor:(UIColor *)color;
+
+// 添加单击事件
+- (void)addAction:(SEL)action target:(id)target;
+
 @end

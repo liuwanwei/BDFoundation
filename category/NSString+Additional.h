@@ -17,4 +17,7 @@
 // 根据限制的字体、宽度获取文字需要的高度
 - (CGFloat)getContentHeightWithFont:(UIFont *)font withWidth:(NSInteger)width;
 
+//判断是否为整形：
+- (BOOL)isPureInt;
+
 @end

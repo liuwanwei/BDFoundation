@@ -40,4 +40,5 @@
 - (void)hideIndicator;
 
 - (void)stopHUDWithSuccessMessage:(NSString *)message;
+- (void)showSuccessMessage:(NSString *)message;
 @end
